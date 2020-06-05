@@ -1,0 +1,22 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] aws_instance.web" [label = "aws_instance.web", shape = "box"]
+		"[root] aws_security_group.allow_all" [label = "aws_security_group.allow_all", shape = "box"]
+		"[root] provider.aws" [label = "provider.aws", shape = "diamond"]
+		"[root] var.aws_access_key" [label = "var.aws_access_key", shape = "note"]
+		"[root] var.aws_secret_key" [label = "var.aws_secret_key", shape = "note"]
+		"[root] var.region" [label = "var.region", shape = "note"]
+		"[root] aws_instance.web" -> "[root] aws_security_group.allow_all"
+		"[root] aws_security_group.allow_all" -> "[root] provider.aws"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] aws_instance.web"
+		"[root] provider.aws (close)" -> "[root] aws_instance.web"
+		"[root] provider.aws" -> "[root] var.aws_access_key"
+		"[root] provider.aws" -> "[root] var.aws_secret_key"
+		"[root] provider.aws" -> "[root] var.region"
+		"[root] root" -> "[root] meta.count-boundary (EachMode fixup)"
+		"[root] root" -> "[root] provider.aws (close)"
+	}
+}
+
